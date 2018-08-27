@@ -20,10 +20,10 @@ export function requestUser() {
   return { type: REQUEST_USER };
 }
 
-export function receiveUser(json) {
+export function receiveUser(user) {
   return {
     type: RECEIVE_USER,
-    user: json
+    user: user
   };
 }
 
@@ -41,7 +41,7 @@ export function fetchUser() {
         response => response.json(),
         error => console.log("An error occurred.", error)
       )
-      .then(json => dispatch(receiveUser(json)));
+      .then(json => dispatch(receiveUser(json.user)));
   };
 }
 

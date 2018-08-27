@@ -78,9 +78,9 @@ export function addresses(
 export function user(state = { isFetching: false }, action) {
   switch (action.type) {
     case REQUEST_USER:
-      return { ...state, isFetching: true };
+      return { isFetching: true };
     case RECEIVE_USER:
-      return { ...state, user: action.user, isFetching: false };
+      return { ...action.user, isFetching: false };
     default:
       return state;
   }
