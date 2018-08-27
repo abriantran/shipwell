@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material/react-button": "^0.4.2",
     "@material/react-text-field": "^0.4.2",
     "cross-fetch": "^2.2.2",
     "react": "^16.4.2",

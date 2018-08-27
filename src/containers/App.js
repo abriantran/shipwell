@@ -4,13 +4,16 @@ import { connect } from "react-redux";
 import "@material/react-text-field/dist/text-field.min.css";
 import TextField, { HelperText, Input } from "@material/react-text-field";
 
+import "@material/react-button/dist/button.css";
+import Button from "@material/react-button";
+
 import { updateAddress, validateAddress } from "../actions";
 
 class App extends Component {
   render() {
     const { addresses, onAddressChange } = this.props;
     return (
-      <div>
+      <React.Fragment>
         {addresses.map(({ name, value, isValid }) => (
           <TextField
             label={name}
@@ -30,7 +33,16 @@ class App extends Component {
             />
           </TextField>
         ))}
-      </div>
+        <Button
+          disabled={
+            !addresses.every(address =>
+              address.isValid.hasOwnProperty("response")
+            )
+          }
+        >
+          Next
+        </Button>
+      </React.Fragment>
     );
   }
 }
