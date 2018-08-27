@@ -1,4 +1,11 @@
-import { NEXT_PAGE, UPDATE_ADDRESS } from "../actions";
+import {
+  NEXT_PAGE,
+  UPDATE_ADDRESS,
+  REQUEST_USER,
+  RECEIVE_USER,
+  REQUEST_VALIDATION,
+  RECEIVE_VALIDATION
+} from "../actions";
 
 export function page(state = 1, action) {
   switch (action.type) {
@@ -14,12 +21,12 @@ export function addresses(
     {
       name: "To",
       value: "",
-      isValid: false
+      isValid: { isFetching: false, value: false }
     },
     {
       name: "From",
       value: "",
-      isValid: false
+      isValid: { isFetching: false, value: false }
     }
   ],
   action
@@ -32,6 +39,38 @@ export function addresses(
             ? { ...address, value: action.value }
             : address
       );
+    case REQUEST_VALIDATION:
+      return state.map(
+        address =>
+          address.name === action.name
+            ? { ...address, isValid: { ...address.isValid, isFetching: true } }
+            : address
+      );
+    case RECEIVE_VALIDATION:
+      return state.map(
+        address =>
+          address.name === action.name
+            ? {
+                ...address,
+                isValid: {
+                  ...address.isValid,
+                  isFetching: false,
+                  value: action.isValid
+                }
+              }
+            : address
+      );
+    default:
+      return state;
+  }
+}
+
+export function user(state = { isFetching: false }, action) {
+  switch (action.type) {
+    case REQUEST_USER:
+      return { ...state, isFetching: true };
+    case RECEIVE_USER:
+      return { ...state, user: action.user, isFetching: false };
     default:
       return state;
   }
