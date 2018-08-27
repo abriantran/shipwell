@@ -4,8 +4,9 @@ export const NEXT_PAGE = "NEXT_PAGE";
 export const UPDATE_ADDRESS = "UPDATE_ADDRESS";
 export const REQUEST_USER = "REQUEST_USER";
 export const RECEIVE_USER = "RECEIVE_USER";
-export const REQUEST_VALIDATION = "REQUEST_VALIDATION";
-export const RECEIVE_VALIDATION = "RECEIVE_VALIDATION";
+export const VALIDATE_ADDRESS_REQUEST = "VALIDATE_ADDRESS_REQUEST";
+export const VALIDATE_ADDRESS_SUCCESS = "VALIDATE_ADDRESS_SUCCESS";
+export const VALIDATE_ADDRESS_FAILURE = "VALIDATE_ADDRESS_FAILURE";
 
 export function nextPage() {
   return { type: NEXT_PAGE };
@@ -44,17 +45,21 @@ export function fetchUser() {
   };
 }
 
-export function requestValidation(name) {
-  return { type: REQUEST_VALIDATION, name: name };
+export function validateAddressRequest(name) {
+  return { type: VALIDATE_ADDRESS_REQUEST, name: name };
 }
 
-export function receiveValidation(name, isValid) {
-  return { type: RECEIVE_VALIDATION, name: name, isValid: isValid };
+export function validateAddressSuccess(name, response) {
+  return { type: VALIDATE_ADDRESS_SUCCESS, name: name, response: response };
+}
+
+export function validateAddressFailure(name, error) {
+  return { type: VALIDATE_ADDRESS_FAILURE, name: name, error: error };
 }
 
 export function validateAddress(name) {
   return function(dispatch, getState) {
-    dispatch(requestValidation(name));
+    dispatch(validateAddressRequest(name));
     const address = getState().addresses.find(address => address.name === name);
     return fetch(
       "https://dev-api.shipwell.com/v2/locations/addresses/validate/",
@@ -67,9 +72,14 @@ export function validateAddress(name) {
         body: JSON.stringify({ formatted_address: address.value })
       }
     )
-      .then(response => response.json())
-      .then(json =>
-        dispatch(receiveValidation(name, json.warnings.length === 0))
+      .then(response =>
+        response
+          .json()
+          .then(json => (response.ok ? json : Promise.reject(json)))
+      )
+      .then(
+        response => dispatch(validateAddressSuccess(name, response)),
+        error => dispatch(validateAddressFailure(name, error))
       );
   };
 }

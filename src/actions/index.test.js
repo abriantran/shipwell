@@ -1,14 +1,8 @@
 import { nextPage, updateAddress, fetchUser, validateAddress } from "./";
 
-import * as reducers from "../reducers";
+import configureStore from "../configureStore";
 
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunkMiddleware from "redux-thunk";
-
-const store = createStore(
-  combineReducers(reducers),
-  applyMiddleware(thunkMiddleware)
-);
+const store = configureStore();
 
 test("Start on page 1", () => {
   expect(store.getState().page).toBe(1);
@@ -53,14 +47,14 @@ test("Detect valid address", () => {
     .then(() =>
       expect(
         store.getState().addresses.find(address => address.name === name)
-          .isValid.value
-      ).toBe(true)
+          .isValid
+      ).toHaveProperty("response")
     );
 });
 
 test("Detect invalid address", () => {
   const name = "From";
-  const invalidAddress = "209 W 9th St, Austin, Texas 78701";
+  const invalidAddress = "";
 
   store.dispatch(updateAddress(name, invalidAddress));
   store
@@ -68,7 +62,7 @@ test("Detect invalid address", () => {
     .then(() =>
       expect(
         store.getState().addresses.find(address => address.name === name)
-          .isValid.value
-      ).toBe(false)
+          .isValid
+      ).toHaveProperty("error")
     );
 });

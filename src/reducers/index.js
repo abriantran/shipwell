@@ -3,8 +3,9 @@ import {
   UPDATE_ADDRESS,
   REQUEST_USER,
   RECEIVE_USER,
-  REQUEST_VALIDATION,
-  RECEIVE_VALIDATION
+  VALIDATE_ADDRESS_REQUEST,
+  VALIDATE_ADDRESS_SUCCESS,
+  VALIDATE_ADDRESS_FAILURE
 } from "../actions";
 
 export function page(state = 1, action) {
@@ -21,12 +22,12 @@ export function addresses(
     {
       name: "To",
       value: "",
-      isValid: { isFetching: false, value: false }
+      isValid: { isFetching: false }
     },
     {
       name: "From",
       value: "",
-      isValid: { isFetching: false, value: false }
+      isValid: { isFetching: false }
     }
   ],
   action
@@ -39,24 +40,33 @@ export function addresses(
             ? { ...address, value: action.value }
             : address
       );
-    case REQUEST_VALIDATION:
+    case VALIDATE_ADDRESS_REQUEST:
       return state.map(
         address =>
           address.name === action.name
-            ? { ...address, isValid: { ...address.isValid, isFetching: true } }
+            ? { ...address, isValid: { isFetching: true } }
             : address
       );
-    case RECEIVE_VALIDATION:
+    case VALIDATE_ADDRESS_SUCCESS:
       return state.map(
         address =>
           address.name === action.name
             ? {
                 ...address,
                 isValid: {
-                  ...address.isValid,
                   isFetching: false,
-                  value: action.isValid
+                  response: action.response
                 }
+              }
+            : address
+      );
+    case VALIDATE_ADDRESS_FAILURE:
+      return state.map(
+        address =>
+          address.name === action.name
+            ? {
+                ...address,
+                isValid: { isFetching: false, error: action.error }
               }
             : address
       );
