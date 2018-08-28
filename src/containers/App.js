@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import LandingPage from "./LandingPage";
 import MapPage from "./MapPage";
+import "./App.css";
 
 const App = ({ page }) => {
   switch (page) {

@@ -7,6 +7,9 @@ import TextField, { HelperText, Input } from "@material/react-text-field";
 import "@material/react-button/dist/button.min.css";
 import Button from "@material/react-button";
 
+import "@material/react-material-icon/dist/material-icon.min.css";
+import MaterialIcon from "@material/react-material-icon";
+
 import {
   fetchUser,
   updateAddress,
@@ -50,6 +53,7 @@ class LandingPage extends Component {
               address.isValid.hasOwnProperty("response")
             )
           }
+          icon={<MaterialIcon icon="arrow_forward" />}
           onClick={onNextButtonClick}
         >
           Next

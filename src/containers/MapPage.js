@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import "@material/react-material-icon/dist/material-icon.min.css";
+import MaterialIcon from "@material/react-material-icon";
+
 class MapPage extends Component {
   render() {
     const { user, origin, destination } = this.props;
@@ -9,9 +12,18 @@ class MapPage extends Component {
 
     return (
       <React.Fragment>
-        <p>{`${first_name} ${last_name}`}</p>
-        <p>{email}</p>
-        <p>{phone_number}</p>
+        <p>
+          <MaterialIcon icon="person" />
+          {`${first_name} ${last_name}`}
+        </p>
+        <p>
+          <MaterialIcon icon="email" />
+          {email}
+        </p>
+        <p>
+          <MaterialIcon icon="phone" />
+          {phone_number}
+        </p>
         <iframe
           width="600"
           height="450"
