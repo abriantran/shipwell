@@ -41,8 +41,8 @@ class MapPage extends Component {
 
 const mapStateToProps = state => {
   const { user, addresses } = state;
-  const origin = addresses.find(address => (address.name = "From")).value;
-  const destination = addresses.find(address => (address.name = "To")).value;
+  const origin = addresses.find(({ name }) => name === "From").value;
+  const destination = addresses.find(({ name }) => name === "To").value;
   return { user, origin, destination };
 };
 
