@@ -12,7 +12,7 @@ export default class Root extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
+        <Router basename="/shipwell">
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route path="/map" component={MapPage} />
