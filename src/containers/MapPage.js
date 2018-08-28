@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import "@material/react-material-icon/dist/material-icon.min.css";
 import MaterialIcon from "@material/react-material-icon";
@@ -9,6 +10,10 @@ class MapPage extends Component {
     const { user, origin, destination } = this.props;
     const { first_name, last_name, email, phone_number } = user;
     const API_KEY = "AIzaSyCW13eFOdUHF5YZPQjiEItUADEp2pZ5a80";
+
+    if (!origin) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <React.Fragment>
