@@ -7,7 +7,7 @@ import Button from "@material/react-button";
 import "@material/react-material-icon/dist/material-icon.min.css";
 import MaterialIcon from "@material/react-material-icon";
 
-import { fetchUser, nextPage } from "../actions";
+import { fetchUser } from "../actions";
 
 import AddressField from "./AddressField";
 
@@ -18,12 +18,12 @@ class LandingPage extends Component {
     fetchUser();
   }
   render() {
-    const { addresses, onNextButtonClick } = this.props;
+    const { addresses, history } = this.props;
 
     return (
       <React.Fragment>
         {addresses.map(address => (
-          <AddressField address={address} />
+          <AddressField address={address} key={address.name} />
         ))}
         <Button
           disabled={
@@ -32,7 +32,7 @@ class LandingPage extends Component {
             )
           }
           icon={<MaterialIcon icon="arrow_forward" />}
-          onClick={onNextButtonClick}
+          onClick={() => history.push("/map")}
         >
           Next
         </Button>
@@ -48,8 +48,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchUser: () => dispatch(fetchUser()),
-  onNextButtonClick: () => dispatch(nextPage())
+  fetchUser: () => dispatch(fetchUser())
 });
 
 export default connect(

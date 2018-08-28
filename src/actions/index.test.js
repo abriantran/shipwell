@@ -4,15 +4,6 @@ import configureStore from "../configureStore";
 
 const store = configureStore();
 
-test("Start on page 1", () => {
-  expect(store.getState().page).toBe(1);
-});
-
-test("Move to page 2", () => {
-  store.dispatch(nextPage());
-  expect(store.getState().page).toBe(2);
-});
-
 test('Initialize "To" and "From" addresses', () => {
   expect(
     store.getState().addresses.find(address => address.name === "To")

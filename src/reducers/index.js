@@ -1,5 +1,4 @@
 import {
-  NEXT_PAGE,
   UPDATE_ADDRESS,
   REQUEST_USER,
   RECEIVE_USER,
@@ -7,15 +6,6 @@ import {
   VALIDATE_ADDRESS_SUCCESS,
   VALIDATE_ADDRESS_FAILURE
 } from "../actions";
-
-export function page(state = 1, action) {
-  switch (action.type) {
-    case NEXT_PAGE:
-      return state + 1;
-    default:
-      return state;
-  }
-}
 
 export function addresses(
   state = [

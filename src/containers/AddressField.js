@@ -36,7 +36,6 @@ const AddressField = ({ address, onAddressChange, onGeocodedAddressClick }) => {
   return (
     <TextField
       label={name}
-      key={name}
       helperText={
         <HelperText isValidationMessage persistent>
           {validationMessage}
@@ -62,6 +61,6 @@ const matchDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  () => {},
+  null,
   matchDispatchToProps
 )(AddressField);

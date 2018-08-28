@@ -1,16 +1,11 @@
 import fetch from "cross-fetch";
 
-export const NEXT_PAGE = "NEXT_PAGE";
 export const UPDATE_ADDRESS = "UPDATE_ADDRESS";
 export const REQUEST_USER = "REQUEST_USER";
 export const RECEIVE_USER = "RECEIVE_USER";
 export const VALIDATE_ADDRESS_REQUEST = "VALIDATE_ADDRESS_REQUEST";
 export const VALIDATE_ADDRESS_SUCCESS = "VALIDATE_ADDRESS_SUCCESS";
 export const VALIDATE_ADDRESS_FAILURE = "VALIDATE_ADDRESS_FAILURE";
-
-export function nextPage() {
-  return { type: NEXT_PAGE };
-}
 
 export function updateAddress(name, value) {
   return { type: UPDATE_ADDRESS, name: name, value: value };
