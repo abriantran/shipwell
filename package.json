@@ -1,12 +1,14 @@
 {
   "name": "shipwell",
   "version": "0.1.0",
+  "homepage": "https://abriantran.github.io/shipwell",
   "private": true,
   "dependencies": {
     "@material/react-button": "^0.4.2",
     "@material/react-material-icon": "^0.4.2",
     "@material/react-text-field": "^0.4.2",
     "cross-fetch": "^2.2.2",
+    "gh-pages": "^1.2.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
@@ -16,6 +18,8 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
