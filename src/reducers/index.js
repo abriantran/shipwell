@@ -1,32 +1,23 @@
 import {
-  NEXT_PAGE,
   UPDATE_ADDRESS,
   REQUEST_USER,
   RECEIVE_USER,
-  REQUEST_VALIDATION,
-  RECEIVE_VALIDATION
+  VALIDATE_ADDRESS_REQUEST,
+  VALIDATE_ADDRESS_SUCCESS,
+  VALIDATE_ADDRESS_FAILURE
 } from "../actions";
-
-export function page(state = 1, action) {
-  switch (action.type) {
-    case NEXT_PAGE:
-      return state + 1;
-    default:
-      return state;
-  }
-}
 
 export function addresses(
   state = [
     {
       name: "To",
       value: "",
-      isValid: { isFetching: false, value: false }
+      isValid: { isFetching: false }
     },
     {
       name: "From",
       value: "",
-      isValid: { isFetching: false, value: false }
+      isValid: { isFetching: false }
     }
   ],
   action
@@ -39,24 +30,33 @@ export function addresses(
             ? { ...address, value: action.value }
             : address
       );
-    case REQUEST_VALIDATION:
+    case VALIDATE_ADDRESS_REQUEST:
       return state.map(
         address =>
           address.name === action.name
-            ? { ...address, isValid: { ...address.isValid, isFetching: true } }
+            ? { ...address, isValid: { isFetching: true } }
             : address
       );
-    case RECEIVE_VALIDATION:
+    case VALIDATE_ADDRESS_SUCCESS:
       return state.map(
         address =>
           address.name === action.name
             ? {
                 ...address,
                 isValid: {
-                  ...address.isValid,
                   isFetching: false,
-                  value: action.isValid
+                  response: action.response
                 }
+              }
+            : address
+      );
+    case VALIDATE_ADDRESS_FAILURE:
+      return state.map(
+        address =>
+          address.name === action.name
+            ? {
+                ...address,
+                isValid: { isFetching: false, error: action.error }
               }
             : address
       );
@@ -68,9 +68,9 @@ export function addresses(
 export function user(state = { isFetching: false }, action) {
   switch (action.type) {
     case REQUEST_USER:
-      return { ...state, isFetching: true };
+      return { isFetching: true };
     case RECEIVE_USER:
-      return { ...state, user: action.user, isFetching: false };
+      return { ...action.user, isFetching: false };
     default:
       return state;
   }
